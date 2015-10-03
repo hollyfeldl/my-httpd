@@ -34,8 +34,13 @@ a:hover, a:active {
     text-decoration: underline;
 }
 
-body {
+body.main {
     background: url(markrank_alt.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+body.alt {
+    background: url(markrank_alt2.jpg) no-repeat center center fixed;
     background-size: cover;
 }
 
