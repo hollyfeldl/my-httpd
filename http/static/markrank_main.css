@@ -68,6 +68,11 @@ div.textcenter {
 	text-align: center;
 }
 
+div.ver {
+    text-align: center;
+    font-size: 50%;
+}
+
 ul {
 	list-style-type: none;
 	width: 70%;
