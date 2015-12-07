@@ -4,7 +4,16 @@
 
 echo "**********************************"
 echo "* Build markrank.net             *"
+echo "*                                *"
+echo "* ############################## *"
+echo "* DO NOT USE ME UNTIL UPDATED TO *"
+echo "* USE JSON BUILD SCRIPTS!!!!!!!! *"
+echo "* ############################## *"
+echo "*                                *"
 echo "**********************************"
+
+# exit until fixed
+exit 1
 
 # look for container name as the second parm and if not default it
 
