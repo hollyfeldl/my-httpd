@@ -1,0 +1,45 @@
+{
+  "kind": "ReplicationController",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "markrank-net-httpd-rc",
+    "labels": {
+      "state": "serving"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "app": "markrank-net-httpd"
+    },
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "markrank-net-httpd"
+        }
+      },
+      "spec": {
+        "volumes": null,
+        "containers": [
+          {
+            "name": "markrank-net-httpd-pod",
+            "image": "gcr.io/my-container-httpd/my-httpd",
+            "ports": [
+              {
+                "containerPort": 80,
+                "protocol": "TCP"
+              },
+              {
+                "containerPort": 443,
+                "protocol": "TCP"
+              }
+            ],
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "dnsPolicy": "ClusterFirst"
+      }
+    }
+  }
+}

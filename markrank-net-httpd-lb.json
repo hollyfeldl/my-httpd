@@ -1,0 +1,18 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "markrank-net-httpd-lb"
+  },
+  "spec": {
+    "ports": [
+      {"port": 80,"targetPort": 80, "name": "markrank-net-port-http"},
+      {"port": 443,"targetPort": 443, "name": "markrank-net-port-https"}
+    ],
+    "selector": {
+      "app": "markrank-net-httpd"
+    },
+    "type": "LoadBalancer"
+  }
+}
+
