@@ -1,0 +1,104 @@
+@import "bourbon/bourbon"
+
+# Sass based style sheet for markrank.net to implement responsive design for site.
+# used Bourbon (http://bourbon.io/) mixin lib 
+#
+# execute "sass markrank_flex.sass markrank_flex.css" to regenerate the css file
+
+$body-font: 'Open Sans', sans-serif
+$body-font-size: 16px
+$body-font-color: #07103A
+$block-font-color: #552C00
+$tile-border-color: $body-font-color
+$tile-color: #FFF4AA
+$tile-header-color:#7B84AE
+$tile-border-radius: 3px
+$tile-border: 3px solid $tile-border-color
+$tile-space: 1.5em
+$tile-margin: 1em
+$section-max-width: 500px 
+$tiles-max-width: $section-max-width
+$object-width: 100px 
+
+html
+	box-sizing: border-box
+	height: 100%
+
+*, *:before, *:after
+	box-sizing: inherit
+
+body
+	font-family: $body-font
+	font-size: $body-font-size
+	font-weight: normal
+	color: $body-font-color
+	background-repeat: no-repeat
+	background-position: center center
+	background-attachment: fixed
+	background-size: cover
+
+h1
+	font-size: ( 2 * $body-font-size )
+	font-weight: bold
+
+
+h2
+	font-size: ( 1.5 * $body-font-size )
+
+h3
+	font-size: ( 1.25 * $body-font-size )
+
+a:link, a:visited 
+	color: $body-font-color 
+	text-decoration: none
+
+
+a:hover, a:active 
+	color: $body-font-color 
+	text-decoration: underline
+
+.ps-section
+	color: $block-font-color
+	text-align: center
+	max-width: $section-max-width
+
+.tiles 
+	@include align-items(stretch)
+	@include display(flex)
+	@include flex-direction(row)
+	@include flex-wrap(wrap)
+	@include justify-content(space-between)
+	max-width: $tiles-max-width
+
+
+.tiles .tile 
+	@include flex(1)
+	background-color: $tile-color
+	border-radius: $tile-border-radius
+	border: $tile-border
+	margin: 0 $tile-margin $tile-space $tile-margin
+	position: relative
+
+.tile .tile-header
+	background-color: $tile-header-color
+	border-width: 2px
+	border-color: $tile-border-color
+	border-style: none none solid none
+	text-align: center
+	font-size: ( 1.1 * $body-font-size )
+
+.tile .tile-face
+	padding: ( $tile-space / 2 ) ( $tile-space / 2 )
+	
+.tile-face p
+	text-align: left
+	font-size: $body-font-size
+
+.tile-face ul
+	list-style-type: none
+
+
+.tile-face li
+	text-align: left
+	font-size: $body-font-size
+	width: $object-width
