@@ -1,33 +1,43 @@
 @import "bourbon/bourbon"
 
-# Sass based style sheet for markrank.net to implement responsive design for site.
-# used Bourbon (http://bourbon.io/) mixin lib 
-#
-# execute "sass markrank_flex.sass markrank_flex.css" to regenerate the css file
+/* Sass based style sheet for markrank.net to implement responsive design for site.
+ * used Bourbon (http://bourbon.io/) mixin lib 
+ *
+ * execute "sass markrank_flex.sass markrank_flex.css" to regenerate the css file */ 
 
 $body-font: 'Open Sans', sans-serif
 $body-font-size: 16px
 $body-font-color: #07103A
-$block-font-color: #552C00
+$section-color: #FFF4AA
+$section-border-color: $body-font-color
+$section-border-radius: 3px
+$section-border: 3px solid $section-border-color
+$section-opacity: .9
+$section-max-width: 500px 
+$tiles-max-width: $section-max-width
 $tile-border-color: $body-font-color
-$tile-color: #FFF4AA
+$tile-color: #D4A16A
 $tile-header-color:#7B84AE
 $tile-border-radius: 3px
 $tile-border: 3px solid $tile-border-color
-$tile-space: 1.5em
-$tile-margin: 1em
-$section-max-width: 500px 
-$tiles-max-width: $section-max-width
-$object-width: 100px 
+$tile-space: 1em
+$tile-margin: .5em
+$tile-padding: ( $tile-space / 2 )
+$btn-color: $tile-header-color
+$btn-border-color: $body-font-color
+$btn-border-radius: .5em
+$btn-border: 3px solid $btn-border-color
+$object-width: 125px 
 
-html
-	box-sizing: border-box
-	height: 100%
+* 
+	box-sizing: inherit
 
-*, *:before, *:after
+*:before, *:after
 	box-sizing: inherit
 
 body
+	box-sizing: border-box
+	height: 100%
 	font-family: $body-font
 	font-size: $body-font-size
 	font-weight: normal
@@ -41,25 +51,39 @@ h1
 	font-size: ( 2 * $body-font-size )
 	font-weight: bold
 
-
 h2
 	font-size: ( 1.5 * $body-font-size )
 
 h3
 	font-size: ( 1.25 * $body-font-size )
 
+h4
+	font-size: ( .5 * $body-font-size )
+
 a:link, a:visited 
 	color: $body-font-color 
 	text-decoration: none
-
 
 a:hover, a:active 
 	color: $body-font-color 
 	text-decoration: underline
 
-.ps-section
-	color: $block-font-color
+.btn 
+	background-color: $btn-color
+	border-radius: $btn-border-radius
+	border: $btn-border
+	padding: ( $body-font-size / 8 ) ( .75 * $body-font-size )
 	text-align: center
+	font-size: ( 1.1 * $body-font-size )
+
+
+.ps-section
+	color: $body-font-color
+	text-align: center
+	background-color: $section-color
+	border-radius: $section-border-radius
+	border: $section-border
+	opacity: $section-opacity
 	max-width: $section-max-width
 
 .tiles 
@@ -69,7 +93,6 @@ a:hover, a:active
 	@include flex-wrap(wrap)
 	@include justify-content(space-between)
 	max-width: $tiles-max-width
-
 
 .tiles .tile 
 	@include flex(1)
@@ -88,7 +111,7 @@ a:hover, a:active
 	font-size: ( 1.1 * $body-font-size )
 
 .tile .tile-face
-	padding: ( $tile-space / 2 ) ( $tile-space / 2 )
+	padding: ( $tile-padding ) ( $tile-padding )
 	
 .tile-face p
 	text-align: left
@@ -96,7 +119,6 @@ a:hover, a:active
 
 .tile-face ul
 	list-style-type: none
-
 
 .tile-face li
 	text-align: left

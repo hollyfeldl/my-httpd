@@ -3,12 +3,7 @@
 # script to perform a rolling upgrade to markrank.net website
 
 echo "**********************************"
-echo "* Upgrade markrank.net             *"
-echo "*                                *"
-echo "* ############################## *"
-echo "* DO NOT USE ME UNTIL UPDATED TO *"
-echo "* USE JSON BUILD SCRIPTS!!!!!!!! *"
-echo "* ############################## *"
+echo "* Upgrade markrank.net           *"
 echo "*                                *"
 echo "**********************************"
 
@@ -16,10 +11,10 @@ echo "**********************************"
 
 if [ -z $4 ] 
 then
-	curKeyPath="markrank-net-httpd-rc"
+	curRepController="markrank-net-httpd-rc"
 	echo "WARN - No replication controller provided, default to" $curRepController
 else
-	curContainer=$4
+	$curRepController=$4
 	echo "INFO - replication controller set to" $curRepController
 fi
 
@@ -28,7 +23,7 @@ then
 	curKeyPath="/home/mark/dev/private_keys"
 	echo "WARN - No path to the private SSL stuff, default to" $curKeyPath
 else
-	curContainer=$3
+	$curKeyPath=$3
 	echo "INFO - Container set to" $curKeyPath
 fi
 
@@ -112,6 +107,10 @@ echo "INFO - Come up with unique container label"
 curLabel=$(date --rfc-3339=date)
 echo "INFO - Container will be "$curContainer":"$curLabel
 
+echo "INFO - Run SASS to build the CSS"
+sass ./html/static/markrank_flex.sass ./html/static/markrank_flex.css
+ls -al ./html/static/markrank_flex.*
+
 echo "INFO - rebuild the container using the latest httpd" 
 docker build -t gcr.io/$curProject/$curContainer:$curLabel --pull=true .
 
@@ -124,14 +123,17 @@ gcloud docker push gcr.io/$curProject/$curContainer:$curLabel
 echo "INFO - perform a rolling upgrade of " $curRepController " to the new container image"
 kubectl rolling-update $curRepController --image=gcr.io/$curProject/$curContainer:$curLabel
 
+echo "INFO - Feedback some public cert info"
+openssl x509 -sha256 -in ./ssl/markrank.pem -fingerprint -serial -startdate -enddate
+
+echo "INFO - check the replication controller version (kubectl describe rc " $curRepController ")" 
+kubectl describe rc $curRepController
+
 echo "INFO - clean up the local cert info"
 rm -v ./ssl/markrank.pem
 rm -v ./ssl/markrank-key.pem
 rm -v ./ssl/markrank-part.pem
 rm -v ./ssl/dhparams_2048.pem
-
-echo "INFO - check the replication controller version (kubectl describe rc " $curRepController ")" 
-kubectl describe rc $curRepController
 
 # we are done
 exit 0
