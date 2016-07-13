@@ -77,16 +77,6 @@ else
 	exit 1
 fi
 
-# look for the DH Parms
-if test -e "$curKeyPath/dhparams_2048.pem"
-then 
-	echo "INFO - Found DH Parms file"
-	cp -v $curKeyPath/dhparams_2048.pem ./ssl/dhparams_2048.pem
-else
-	echo "ERROR - Cannot find DH Params file"
-	exit 1
-fi
-
 # look for the the private key
 if test -e "$curKeyPath/markrank-key.pem"
 then 
@@ -98,10 +88,7 @@ else
 fi
 
 echo "INFO - Build a new cert with a 90 day life"
-openssl req -new -x509 -key ./ssl/markrank-key.pem -out ./ssl/markrank-part.pem -days 90 -nodes
-
-echo "INFO - Add on the unique DH Parms to the end of the cert"
-cat ./ssl/markrank-part.pem ./ssl/dhparams_2048.pem > ./ssl/markrank.pem
+openssl req -new -x509 -key ./ssl/markrank-key.pem -out ./ssl/markrank.pem -days 90 -nodes
 
 echo "INFO - Come up with unique container label"
 curLabel=$(date --rfc-3339=date)
@@ -132,8 +119,6 @@ kubectl describe rc $curRepController
 echo "INFO - clean up the local cert info"
 rm -v ./ssl/markrank.pem
 rm -v ./ssl/markrank-key.pem
-rm -v ./ssl/markrank-part.pem
-rm -v ./ssl/dhparams_2048.pem
 
 # we are done
 exit 0
